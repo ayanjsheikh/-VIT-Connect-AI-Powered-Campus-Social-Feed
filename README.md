@@ -17,8 +17,7 @@ The application features a custom-built UI, user authentication, dynamic post cr
 3. [The AI Engine (Course Mapping)](#-the-ai-engine-course-mapping)
 4. [Technical Architecture](#-technical-architecture)
 5. [Installation & Setup](#-installation--setup)
-6. [Usage Guide & Demo](#-usage-guide--demo)
-7. [Future Enhancements](#-future-enhancements)
+
 
 ---
 
