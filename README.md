@@ -1,52 +1,88 @@
 # 🎓 VIT Connect — AI-Powered Campus Social Feed
 
-**VIT Connect** is a Build Your Own Project (BYOP) developed for the VIT Bhopal AI Course. It is a fully functional, personalized social media recommendation engine tailored for campus life. The application features user authentication, post creation, dynamic categorisation, and a smart feed powered by Machine Learning (Content-Based Filtering using TF-IDF and Cosine Similarity).
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.35.0-red.svg)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.4.0-orange.svg)
+![Status](https://img.shields.io/badge/Status-Prototype-success.svg)
+
+**VIT Connect** is a Build Your Own Project (BYOP) developed for the VIT Bhopal Artificial Intelligence Course. It is a fully functional, personalized social media recommendation engine tailored specifically for campus life.
+
+The application features a custom-built UI, user authentication, dynamic post creation, and an intelligent "Smart Feed" powered by **Content-Based Filtering** (TF-IDF Vectorisation & Cosine Similarity). 
 
 ---
 
-## 🚀 Features
-
-* **User Authentication:** Secure login and registration system with profile generation.
-* **Dynamic Smart Feed:** A personalized feed that learns from your interactions.
-* **Campus Categories:** Filter posts by Clubs, Exams, Canteen, Events, Hostel, and General.
-* **Interactive Engagement:** Like, hide (disinterest), and delete posts to train your personal AI agent.
-* **Live Analytics:** Real-time profile strength, top match percentage, and an AI-generated "Interest Cloud" based on your activity.
-
----
-
-## 🧠 The Intelligence Behind the App (AI Course Mapping)
-
-This application transforms a simple chronological list of posts into a "Smart Feed" using core Artificial Intelligence concepts. Here is how the AI operates:
-
-### 1. Perception (The "Sensors") — *CO2: Knowledge Representation*
-The AI doesn't just see "text." It uses Natural Language Processing (NLP) to perceive features from the data. If a post says "Hackathon at Lab 1," the AI extracts features like *Category: Tech*, *Location: Lab*, and *Urgency: High*. Through **TF-IDF Vectorisation**, it translates human language into a mathematical knowledge representation that the system can process.
-
-### 2. Reasoning (The "Brain") — *CO1: Rational Agent & CO3: Probability*
-The AI acts as a **Rational Agent**. Its primary "Goal" is to maximize your engagement. It uses probabilistic reasoning to predict user behavior:
-"Given that the user liked 3 'Coding' posts earlier, what is the Probability $P(\text{Like} | \text{Tech Post})$?" 
-By calculating **Cosine Similarity** between the user's learned profile vector and the available posts, it ranks the posts with the highest mathematical probability of engagement at the top.
-
-### 3. Learning (The "Adaptation") — *CO4: Machine Learning*
-Every time you click "Like" or "Not Interested," the AI updates its internal model in real-time. It reduces the **Bias** (what it assumes you like) and adjusts the **Variance** (how much new content it exposes you to). The agent is literally learning your unique personality and adapting its multidimensional user profile vector based on your active data.
-
-### 4. Optimization (The "Heuristic") — *CO2: Search Heuristics*
-Because a real social media feed contains millions of posts, the AI utilizes Search Heuristics to quickly filter and present the best posts. Instead of exhaustively checking every single post in the database sequentially, it calculates proximity in the vector space, saving computational power and reducing latency.
+## 📑 Table of Contents
+1. [Problem Statement](#-problem-statement)
+2. [Core Features](#-core-features)
+3. [The AI Engine (Course Mapping)](#-the-ai-engine-course-mapping)
+4. [Technical Architecture](#-technical-architecture)
+5. [Installation & Setup](#-installation--setup)
+6. [Usage Guide & Demo](#-usage-guide--demo)
+7. [Future Enhancements](#-future-enhancements)
 
 ---
 
-## 🛠️ Tech Stack
+## 🎯 Problem Statement
+On a busy campus, students are bombarded with information across multiple WhatsApp groups, emails, and notice boards. Relevant updates (like a hackathon for CS students or a study group for CAT aspirants) often get lost in the noise. 
 
-* [cite_start]**Frontend & Web Framework:** Streamlit 
-* [cite_start]**Data Handling:** Pandas, NumPy 
-* [cite_start]**Machine Learning:** Scikit-Learn (TF-IDF Vectoriser, Cosine Similarity) 
-* **Security:** Built-in `hashlib` for password hashing
+**Solution:** VIT Connect consolidates campus updates into unified categories (Clubs, Exams, Canteen, Events, Hostel, General) and uses a Machine Learning recommendation agent to learn what each individual user cares about, filtering the noise and highlighting relevant content.
 
 ---
 
-## 💻 Installation & Usage
+## ✨ Core Features
 
-**1. Clone the repository and navigate to the project directory.**
+### 🔐 User Management & UI
+* **Custom Authentication:** Secure login and sign-up flows using `hashlib` SHA-256 encryption for passwords.
+* **Dynamic Avatars:** Automatically generated avatars with color-coding based on username hashing.
+* **Modern UI/UX:** Custom CSS implementation overriding default Streamlit styles for a modern, app-like feel (glassmorphism, gradient text, hover animations).
 
-**2. Install the required dependencies:**
+### 📱 Social Engagement
+* **Post Creation:** Users can publish posts with titles, descriptions, categories, and expressive emojis.
+* **Categorised Feeds:** Filter the timeline by specific campus interests (e.g., Canteen, Exams, Clubs).
+* **Interactive Feedback Loop:** Users can "Like" (❤️) or mark posts as "Not Interested" (👎). This explicit feedback directly trains their personal AI model in real-time.
+
+### 🧠 Analytics & Profiling
+* **Live Stats Ribbon:** Real-time metrics showing total feed posts, profile strength, and top match percentages.
+* **AI Interest Cloud:** A dynamically generated tag cloud (e.g., "AI", "Hackathon", "Dosa") revealing the exact keywords the Machine Learning model has associated with the user's profile.
+
+---
+
+## 🤖 The AI Engine (Course Mapping)
+
+This project explicitly demonstrates core AI concepts and maps them to standard Course Outcomes (CO).
+
+### 1. Perception & Knowledge Representation (CO2)
+The AI perceives raw text data and converts it into a mathematical format it can understand. 
+* **Implementation:** The `build_tfidf(posts)` function concatenates the Title, Body, and Category of every post.
+* **Algorithm:** `scikit-learn`'s `TfidfVectorizer` (Term Frequency-Inverse Document Frequency) extracts unigrams and bigrams, removing stop words, to create a sparse document matrix. 
+
+### 2. The Rational Agent (CO1)
+The application assigns a unique `RecommendationAgent` object to every logged-in user. 
+* **State:** The agent maintains a `user_profile` (an N-dimensional numpy array initialized to zeros).
+* **Action:** When a user likes a post, the agent executes `like_post()`, adding the specific TF-IDF vector of that post to the user's overarching profile vector.
+
+### 3. Machine Learning & Probability (CO4 & CO3)
+The system uses **Content-Based Filtering** to adapt to the user.
+* **Scoring:** The agent's `rank()` method calculates the **Cosine Similarity** between the user's learned profile vector and the entire matrix of available posts.
+* **Ranking:** Posts are assigned a "Relevance Score" (0% to 100%) based on the similarity cosine. The feed dynamically sorts posts so that items with the highest probability of engagement appear first. Highly relevant posts receive a "🔥 Match" badge.
+
+---
+
+## ⚙️ Technical Architecture
+
+The app is built as a single-page stateful web application using Python.
+
+* [cite_start]**Frontend & State:** `streamlit` (managing page navigation, session states, and UI rendering).
+* **Data Processing:** `pandas` for handling feed dataframes and sorting logic; [cite_start]`numpy` for vector math.
+* **In-Memory Database:** Uses `st.session_state` to simulate a database. It initializes with a seed dictionary of 20 pre-written campus posts (`SEED_POSTS`) and a default admin user.
+
+---
+
+## 🚀 Installation & Setup
+
+Follow these steps to run the application on your local machine.
+
+**1. Clone the repository**
 ```bash
-pip install -r requirements.txt
+git clone [https://github.com/yourusername/vit-connect-byop.git](https://github.com/yourusername/vit-connect-byop.git)
+cd vit-connect-byop
